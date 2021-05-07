@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  #navbar-reg
+    ul.menu-reg
+          //- li
+          //-   a(href='/') Home
+          //- li
+          //-   a(href='/login') Login
+          //- li
+          //-   a(href='/logout') Logout
+  .messagediv  
+      if(message) 
+      p.message #{message} 
+  .form_container
+      form( action='/login' method='post')
+        .ipfield
+          label Email:
+          input(type='email' name='email' required='' pattern= "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$" placeholder='mail@example.com')
+        .ipfield
+          label Password:
+          input(required='' type='password' name='password' minlength='8' placeholder="Password")
+        .btndiv
+          input.loginbtn(type='submit' value='Log In') 
+        br
+        a(href='/signup') Need an account? Sign up here.

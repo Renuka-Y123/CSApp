@@ -1,0 +1,33 @@
+extends layout
+include mixins/_dbtableRowSch
+
+block content
+    #navbar-reg
+    ul.menu-reg
+      li
+        a(href='/schedule') Home
+      //- li
+      //-   a(href='/login') Login
+      li
+        a(href='/logout') Logout
+    h1.userheader User Schedules
+    .buttondiv
+      a.userButton(href='/newSchedule') Add Schedule
+    //pre #{JSON.stringify(schedules)} 
+    if schedules != null
+      .datacontainer
+        table.center
+          thead
+            tr
+              th Firstname
+              th Surname
+              th Day
+              th Start_at
+              th End_at
+          tbody
+              each schedule in schedules
+               //pre #{JSON.stringify(schedule)} 
+               +dbtableRowSch(schedule)
+                
+    else 
+     p Schedule Not Found

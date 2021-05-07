@@ -1,0 +1,16 @@
+extends layout
+block content
+  #navbar-reg
+    ul.menu-reg
+      li
+        a(href='/schedule') Home
+      //- li
+      //-   a(href='/login') Login
+      li
+        a(href='/logout') Logout
+  if error && message
+    h1= message
+    h2= error.status
+    pre #{error.stack}
+  .errormsg
+    p= message

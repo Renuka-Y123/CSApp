@@ -1,0 +1,80 @@
+extends layout
+
+block content
+  #navbar-reg
+    ul.menu-reg
+      //- li
+      //-   a(href='/') Home
+      li
+        a(href='/login') Login
+      //- li
+      //-   a(href='/logout') Logout
+  .form_container
+    form(id="newUser" action='/signup' method='post')
+      .ipfield
+        label 
+          |Firstname: 
+          span.required *
+        if(errors)
+          for error in errors
+            if (error.param=='firstname')
+                span.ip_error.is-danger #{error.msg} 
+                -break
+        input(type='text' name='firstname' required='' minlength='3' maxlength='25')
+      .ipfield
+        label 
+          |Surname: 
+          span.required *
+        if(errors)
+          for error in errors
+            if (error.param=='surname')
+                span.ip_error.is-danger #{error.msg} 
+                -break
+        input(type='text' name='surname' required='' minlength='1' maxlength='25')
+      .ipfield
+        label 
+          |Email:
+          span.required *
+        if(errors)
+          for error in errors
+            if (error.param=='email')
+                span.ip_error.is-danger #{error.msg} 
+                -break
+        input(type='email' name='email' required='' pattern= "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$" placeholder='mail@example.com')
+      .ipfield
+        label 
+          |Password (8 characters minimum):
+          span.required *
+        if(errors)
+          for error in errors
+            if (error.param=='password')
+                span.ip_error.is-danger #{error.msg} 
+                -break
+        input(type='password' name='password' minlength='8' required='')
+        .btndiv
+        input.loginbtn(type='submit' value='Sign Up') 
+        br
+        a(href='/login') Already have an account? Sign in
+
+
+        
+
+               //- .form_container
+    //-     form(autocomplete='off' action='/signup' method='post')
+    //-       .ipfield
+    //-         label Firstname:
+    //-         input(required='' type='text' name='firstname' placeholder="Firstname")
+    //-       .ipfield
+    //-         label Surname:
+    //-         input(required='' type='text' name='surname' placeholder="Surname")
+    //-       .ipfield
+    //-         label Email:
+    //-         input(required='' type='email' name='email' placeholder="Email") 
+    //-       .ipfield
+    //-         label Password:
+    //-         input(required='' type='password' name='password' placeholder="Password")
+    //-       .btndiv
+    //-         input.loginbtn(type='submit' value='Sign Up') 
+    //-       br
+    //-       a(href='/login') Already have an account? Sign in
+    

@@ -1,0 +1,62 @@
+extends layout
+
+block content
+ #navbar-reg
+    ul.menu-reg
+      li
+        a(href='/schedule') Home
+      //- li
+      //-   a(href='/login') Login
+      li
+        a(href='/logout') Logout
+ h1.userheader New Schedule 
+   if users != null 
+    .form_container
+      form(id="newSchedule" action="/newSchedule" method="post")
+        .ipfield
+          label
+            |Username
+            span.required *
+            if(errors)
+              for error in errors
+                if (error.param=='username')
+                    span.ip_error.is-danger #{error.msg} 
+                    -break
+            input(type='text' name='username' required='' value=`${users.firstname}`)
+        
+
+        .ipfield
+          label 
+            |Day 
+            span.required *
+            if(errors)
+              for error in errors
+                if (error.param=='day')
+                    span.ip_error.is-danger #{error.msg} 
+                    -break
+            input(type='date' name='day' required='' min='2021-04-20')
+          
+        .ipfield
+          label 
+            |Start_time
+            span.required *
+            if(errors)
+              for error in errors
+                if (error.param=='start_time')
+                    span.ip_error.is-danger #{error.msg} 
+                    -break
+            input(type='time' name='start_time' required='')
+
+        .ipfield
+          label 
+            |End_time
+            span.required *
+            if(errors)
+              for error in errors
+                if (error.param=='end_time')
+                    span.ip_error.is-danger #{error.msg} 
+                    -break
+            input(type='time' name='end_time' required='')
+        input.sendbutton(type='submit' value='SUBMIT')
+   else 
+     p User Not Found
