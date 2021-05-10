@@ -16,32 +16,31 @@ const authTokens = {}
 
 const generateAuthToken = userId => {
   // return jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET, {
-    // expiresIn: '10m'
+  // expiresIn: '10m'
   // })
   return jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_SECRET)
 }
 
-
 module.exports = {
   setAuthToken: (userId, res) => {
-    let result = {}
+    //let result = {}
     var accessToken = generateAuthToken(userId)
     authTokens[accessToken] = userId
-    result.accesstoken = accessToken
+    // result.accesstoken = accessToken
     return accessToken
   },
 
   unsetAuthToken: (req, res) => {
-    authTokens = authTokens.filter(token => token !== req.body.token)
-   // refreshTokens = refreshTokens.filter(token => t !== token);
-    res.clearCookie("user_id");
+    //authTokens = authTokens.filter(token => token !== req.body.token)
+    // refreshTokens = refreshTokens.filter(token => t !== token);
+    authTokens[req.cookies['AuthToken']] = ''
   },
 
   getSessionUser: (req, res, next) => {
-    const authToken = req.cookies['AuthToken'];
+    const authToken = req.cookies['AuthToken']
     // Inject the user to the request
-    req.user = authTokens[authToken];
-    next();
+    req.user = authTokens[authToken]
+    next()
   },
 
   sessionChecker: (req, res, next) => {
@@ -52,15 +51,14 @@ module.exports = {
     }
   },
 
-  logout:(req,res,next) =>{
-    
-    const { token } = req.body;
-    refreshTokens = refreshTokens.filter(token => t !== token);
-    res.redirect("/login");
+  logout: (req, res, next) => {
+    const { token } = req.body
+    authTokens = authTokens.filter(token => t !== token)
+    res.redirect('/login')
   },
 
   requireAuth: (req, res, next) => {
-   const authHeader = req.headers['authorization']
+    const authHeader = req.headers['authorization']
     //const authHeader = req.headers.authorization
     console.log(authHeader)
     const token = authHeader && authHeader.split(' ')[1]
@@ -84,19 +82,19 @@ module.exports = {
     }
   },
 
-reqAuth : (req, res, next) => { 
-   const authToken = req.cookies['AuthToken']; 
-    req.user = authTokens[authToken]; 
+  reqAuth: (req, res, next) => {
+    //  const authToken = req.cookies['AuthToken'];
+    //   req.user = authTokens[authToken];
+    console.log(req.user)
     if (req.user) {
-        next();
+      next()
     } else {
-        res.render('login', {
-            message: 'Please login to continue',
-            messageClass: 'alert-danger'
-        });
+      res.render('login', {
+        message: 'Please login to continue',
+        messageClass: 'alert-danger'
+      })
     }
-},
-    
+  },
 
   getHashedPassword: async password => {
     try {
